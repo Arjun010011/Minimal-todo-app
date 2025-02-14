@@ -10,10 +10,10 @@ function page() {
   };
   console.log(formdata);
   return (
-    <div className="w-[100vw] h-[100vh] bg-yellow-100  flex items-center justify-center">
+    <div className="w-[100vw] h-[100vh] bg-slate-700  flex items-center justify-center">
       <div className=" inline-flex ">
         <form
-          className="p-5 gap-4 flex flex-col text-center  pt-10 bg-white rounded-lg border shadow-lg pb-10 min-w-[30vw] max-w-[90vw] w-[90vw] lg:w-[30vw]
+          className="p-5 gap-4 flex flex-col text-center  pt-10 bg-yellow-100 rounded-lg border shadow-lg pb-10 min-w-[30vw] max-w-[90vw] w-[90vw] lg:w-[30vw]
         "
         >
           <h3 className="font-semibold text-2xl ">Signin Form</h3>
