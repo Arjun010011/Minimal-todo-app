@@ -12,7 +12,7 @@ function page() {
           <h3 className="font-semibold text-2xl ">Signin Form</h3>
           <TextInput placeholder="Enter your email" type="email" />
           <TextInput placeholder="Enter your password" type="password" />
-          <Button>submit</Button>
+          <Button type="submit">submit</Button>
         </form>
       </div>
     </div>
