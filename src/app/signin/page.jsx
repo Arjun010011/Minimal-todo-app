@@ -3,10 +3,9 @@
 import { Alert, Button, TextInput } from "flowbite-react";
 import React, { useState } from "react";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 function page() {
-  const router = useRouter();
-  const [formdata, setFormdata] = useState(null);
+  const [formdata, setFormdata] = useState({});
   const [error, setError] = useState(false);
   const [message, setMessage] = useState(null);
   const handleChange = (e) => {
@@ -20,11 +19,13 @@ function page() {
     setError(false);
     setMessage(null);
     try {
-      const res = await axios.post("/api/signup", formdata);
-      router.push("/signin");
-      setMessage(res.data.user);
+      const res = await axios.post("/api/signin", formdata);
+      if (res.status !== 200) {
+        setError(res.data.message);
+      }
+      setMessage(res.data);
     } catch (error) {
-      setError(error);
+      setError(error.res?.data?.message || error.message);
     }
   };
   return (
@@ -35,7 +36,7 @@ function page() {
           className="p-5 mb-5 gap-4 flex flex-col text-center  pt-10 bg-yellow-100 rounded-lg border shadow-lg pb-10 min-w-[30vw] max-w-[90vw] w-[90vw] lg:w-[30vw]
         "
         >
-          <h3 className="font-semibold text-2xl ">Signup Form</h3>
+          <h3 className="font-semibold text-2xl ">Signin Form</h3>
 
           <TextInput
             placeholder="Enter your email"
@@ -49,15 +50,17 @@ function page() {
             id="password"
             onChange={handleChange}
           />
-          <TextInput
-            placeholder="Enter your username"
-            type="text"
-            id="username"
-            onChange={handleChange}
-          />
+
           <Button type="submit">submit</Button>
+          <span className="flex">
+            <p>Don't have an account ?</p>
+            <Link href="/signup" className="text-blue-400">
+              SignUp
+            </Link>
+          </span>
         </form>
-        {message && <Alert color="green">{message}</Alert>}
+        {message && <Alert color="green">{message.message}</Alert>}
+        {error && <Alert color="failure">{error}</Alert>}
       </div>
     </div>
   );

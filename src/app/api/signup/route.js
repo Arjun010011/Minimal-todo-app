@@ -1,7 +1,6 @@
 import User from "@/model/User";
 import connectDb from "@/lib/mongodb";
 import bcryptjs from "bcryptjs";
-
 export async function POST(req) {
   await connectDb();
   const body = await req.json();
