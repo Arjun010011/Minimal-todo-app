@@ -1,7 +1,14 @@
+"use client";
+
 import { Button, TextInput } from "flowbite-react";
-import React from "react";
+import React, { useState } from "react";
 
 function page() {
+  const [formdata, setFormdata] = useState(null);
+  const handleChange = (e) => {
+    setFormdata({ ...formdata, [e.target.id]: e.target.value });
+  };
+  console.log(formdata);
   return (
     <div className="w-[100vw] h-[100vh] bg-yellow-100  flex items-center justify-center">
       <div className=" inline-flex ">
@@ -10,8 +17,18 @@ function page() {
         "
         >
           <h3 className="font-semibold text-2xl ">Signin Form</h3>
-          <TextInput placeholder="Enter your email" type="email" />
-          <TextInput placeholder="Enter your password" type="password" />
+          <TextInput
+            placeholder="Enter your email"
+            type="email"
+            id="email"
+            onChange={handleChange}
+          />
+          <TextInput
+            placeholder="Enter your password"
+            type="password"
+            id="password"
+            onChange={handleChange}
+          />
           <Button type="submit">submit</Button>
         </form>
       </div>
