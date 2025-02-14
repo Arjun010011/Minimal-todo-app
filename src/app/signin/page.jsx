@@ -1,10 +1,12 @@
 "use client";
 
 import { Alert, Button, TextInput } from "flowbite-react";
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 function page() {
+  const router = useRouter();
   const [formdata, setFormdata] = useState({});
   const [error, setError] = useState(false);
   const [message, setMessage] = useState(null);
@@ -24,6 +26,7 @@ function page() {
         setError(res.data.message);
       }
       setMessage(res.data);
+      router.push("/mainpage");
     } catch (error) {
       setError(error.res?.data?.message || error.message);
     }
