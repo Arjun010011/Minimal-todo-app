@@ -67,6 +67,11 @@ function page() {
           </span>
         </form>
         {message && <Alert color="green">{message}</Alert>}
+        {error && (
+          <Alert color="failure">
+            {error.response.data.message} || {"user already exist"}
+          </Alert>
+        )}
       </div>
     </div>
   );
