@@ -18,9 +18,7 @@ function page() {
     setError(false);
     setMessage(null);
     try {
-      const res = await axios.post("/api/signup", formdata, {
-        headers: { "Content-Type": "application/json" },
-      });
+      const res = await axios.post("/api/signup", formdata);
       setMessage(res.data.message);
     } catch (error) {
       setError(error);
