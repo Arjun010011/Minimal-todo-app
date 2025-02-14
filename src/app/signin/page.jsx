@@ -51,7 +51,9 @@ function page() {
             onChange={handleChange}
           />
 
-          <Button type="submit">submit</Button>
+          <Button type="submit" gradientDuoTone="redToYellow">
+            submit
+          </Button>
           <span className="flex">
             <p>Don't have an account ?</p>
             <Link href="/signup" className="text-blue-400">

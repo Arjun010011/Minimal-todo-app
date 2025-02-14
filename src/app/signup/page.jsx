@@ -4,6 +4,7 @@ import { Alert, Button, TextInput } from "flowbite-react";
 import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 function page() {
   const router = useRouter();
   const [formdata, setFormdata] = useState(null);
@@ -55,7 +56,15 @@ function page() {
             id="username"
             onChange={handleChange}
           />
-          <Button type="submit">submit</Button>
+          <Button type="submit" gradientDuoTone="redToYellow">
+            submit
+          </Button>
+          <span className="flex ">
+            <p>Have an account?</p>
+            <Link href="/signin" className="text-blue-400">
+              Signin
+            </Link>
+          </span>
         </form>
         {message && <Alert color="green">{message}</Alert>}
       </div>
