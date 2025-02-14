@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, TextInput } from "flowbite-react";
+import { Alert, Button, TextInput } from "flowbite-react";
 import React, { useState } from "react";
 import axios from "axios";
 function page() {
@@ -28,10 +28,10 @@ function page() {
   };
   return (
     <div className="w-[100vw] h-[100vh] bg-slate-700  flex items-center justify-center">
-      <div className=" inline-flex ">
+      <div className=" inline-flex  flex-col ">
         <form
           onSubmit={handleSubmit}
-          className="p-5 gap-4 flex flex-col text-center  pt-10 bg-yellow-100 rounded-lg border shadow-lg pb-10 min-w-[30vw] max-w-[90vw] w-[90vw] lg:w-[30vw]
+          className="p-5 mb-5 gap-4 flex flex-col text-center  pt-10 bg-yellow-100 rounded-lg border shadow-lg pb-10 min-w-[30vw] max-w-[90vw] w-[90vw] lg:w-[30vw]
         "
         >
           <h3 className="font-semibold text-2xl ">Signin Form</h3>
@@ -56,6 +56,7 @@ function page() {
           />
           <Button type="submit">submit</Button>
         </form>
+        {message && <Alert color="green">{message}</Alert>}
       </div>
     </div>
   );
