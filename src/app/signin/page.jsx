@@ -28,7 +28,7 @@ function page() {
         setError(res.data.message);
       }
       setUser(res.data.user);
-      router.push("/mainpage");
+      router.push("/");
     } catch (error) {
       setError(error.res?.data?.message || error.message);
     }
