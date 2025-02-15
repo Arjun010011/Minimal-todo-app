@@ -23,7 +23,7 @@ const MainPage = () => {
     return <div>Loading...</div>; // Prevent flickering before Zustand loads
   }
 
-  return <div>Welcome, {user?.username || "User"}! This is your MainPage.</div>;
+  return <div>Welcome, {user?.username || "User"}! This is your homepage.</div>;
 };
 
 export default MainPage;
