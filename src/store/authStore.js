@@ -9,7 +9,10 @@ const useAuthStore = create(
       notes: [],
 
       setUser: (userData) => set({ user: userData }),
-      logout: () => set({ user: null, notes: [] }),
+      logout: () => {
+        set({ user: null, notes: [] });
+        localStorage.removeItem("user-storage"); // Clears persisted user data
+      },
 
       fetchNotes: async () => {
         const { user } = get();

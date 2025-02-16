@@ -1,9 +1,8 @@
 "use client";
-
+import LogOut from "./components/LogOut";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import useAuthStore from "@/store/authStore";
-
 const MainPage = () => {
   const router = useRouter();
   const { user, notes, fetchNotes, addNote } = useAuthStore();
@@ -59,6 +58,7 @@ const MainPage = () => {
           >
             Add
           </button>
+          <LogOut />
         </div>
 
         {/* Notes List */}
