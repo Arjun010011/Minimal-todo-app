@@ -15,9 +15,7 @@ function page() {
   const handleChange = (e) => {
     setFormdata({ ...formdata, [e.target.id]: e.target.value });
   };
-  console.log(formdata);
-  console.log(message);
-  console.log(error);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(false);
