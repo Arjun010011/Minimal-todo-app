@@ -85,7 +85,7 @@ const MainPage = () => {
             </ul>
           ) : (
             <p className="text-gray-500 mt-2">
-              No notes yet. Start adding some!
+              No notes yet. Start adding some!!
             </p>
           )}
         </div>
