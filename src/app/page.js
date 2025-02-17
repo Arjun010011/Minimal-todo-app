@@ -45,7 +45,7 @@ const MainPage = () => {
         </h1>
 
         {/* Note Input */}
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-col sm:flex-row ">
           <input
             type="text"
             value={noteInput}
@@ -53,13 +53,15 @@ const MainPage = () => {
             placeholder="Enter your note..."
             className="flex-1 p-2 border rounded-md"
           />
-          <button
-            onClick={handleAddNote}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md"
-          >
-            Add
-          </button>
-          <LogOut />
+          <div className="flex gap-2 pt-3">
+            <button
+              onClick={handleAddNote}
+              className="px-4 py-2 bg-blue-500 text-white rounded-md"
+            >
+              Add
+            </button>
+            <LogOut />
+          </div>
         </div>
 
         {/* Notes List */}
