@@ -1,6 +1,5 @@
 import connectDb from "@/lib/mongodb";
 import Notes from "@/model/Note";
-import { ObjectId } from "mongodb";
 export const DELETE = async (req) => {
   try {
     await connectDb();
@@ -14,7 +13,7 @@ export const DELETE = async (req) => {
         }
       );
     }
-    const note = await Notes.findOneAndDelete({ _id: new ObjectId(noteId) });
+    const note = await Notes.findOneAndDelete({ _id: noteId });
     if (note) {
       return new Response(JSON.stringify({ message: "deleted succefully" }), {
         status: 200,
