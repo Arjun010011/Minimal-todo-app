@@ -42,6 +42,24 @@ const useAuthStore = create(
           console.error("Failed to add note", error);
         }
       },
+      deleteNote: async (noteId) => {
+        const { user, notes } = get();
+        if (!user) return;
+
+        try {
+          // Call API to delete note
+          await axios.delete("/api/note/delete", {
+            data: { noteId },
+          });
+
+          // Remove the note from the state
+          set((state) => ({
+            notes: state.notes.filter((note) => note._id !== noteId),
+          }));
+        } catch (error) {
+          console.error("Failed to delete note", error);
+        }
+      },
     }),
     { name: "user-storage" }
   )

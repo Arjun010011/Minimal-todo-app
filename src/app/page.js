@@ -3,12 +3,13 @@ import LogOut from "./components/LogOut";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import useAuthStore from "@/store/authStore";
+import { FaTrash } from "react-icons/fa";
+import { Button } from "flowbite-react";
 const MainPage = () => {
   const router = useRouter();
-  const { user, notes, fetchNotes, addNote } = useAuthStore();
+  const { user, notes, fetchNotes, addNote, deleteNote } = useAuthStore();
   const [isHydrated, setIsHydrated] = useState(false);
   const [noteInput, setNoteInput] = useState("");
-
   useEffect(() => {
     setIsHydrated(true);
   }, []);
@@ -66,8 +67,17 @@ const MainPage = () => {
           {notes.length > 0 ? (
             <ul className="space-y-2">
               {notes.map((note) => (
-                <li key={note._id} className="p-2 bg-gray-200 rounded-md">
+                <li
+                  key={note._id}
+                  className="p-2 bg-gray-200 rounded-md flex justify-between group relative "
+                >
                   {note.content}
+                  <Button
+                    className="hidden group-hover:block bg-red-500 text-white hover:bg-gray-500"
+                    onClick={() => deleteNote(note._id)}
+                  >
+                    <FaTrash />
+                  </Button>
                 </li>
               ))}
             </ul>
