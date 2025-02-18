@@ -3,13 +3,18 @@ import LogOut from "./components/LogOut";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import useAuthStore from "@/store/authStore";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaEdit } from "react-icons/fa";
 import { Button } from "flowbite-react";
+
 const MainPage = () => {
   const router = useRouter();
-  const { user, notes, fetchNotes, addNote, deleteNote } = useAuthStore();
+  const { user, notes, fetchNotes, addNote, deleteNote, updateNote } =
+    useAuthStore();
   const [isHydrated, setIsHydrated] = useState(false);
   const [noteInput, setNoteInput] = useState("");
+  const [isEditing, setIsEditing] = useState(null); // Track which note is being edited
+  const [editedContent, setEditedContent] = useState(""); // Track the content of the note being edited
+
   useEffect(() => {
     setIsHydrated(true);
   }, []);
@@ -20,7 +25,6 @@ const MainPage = () => {
     }
   }, [user, isHydrated, router]);
 
-  // Fetch notes when the page loads
   useEffect(() => {
     if (isHydrated && user) {
       fetchNotes();
@@ -31,6 +35,28 @@ const MainPage = () => {
     if (noteInput.trim() === "") return;
     await addNote(noteInput);
     setNoteInput("");
+  };
+
+  const handleEditNote = (note) => {
+    setIsEditing(note._id); // Start editing the note
+    setEditedContent(note.content); // Set the content of the note being edited
+  };
+
+  const handleSaveEdit = async () => {
+    if (editedContent.trim() === "") {
+      // If content is empty, delete the note
+      await deleteNote(isEditing);
+    } else {
+      // Otherwise, update the note
+      await updateNote(isEditing, editedContent);
+    }
+    setIsEditing(null); // Exit edit mode
+    setEditedContent(""); // Clear the edited content
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditing(null); // Exit edit mode
+    setEditedContent(""); // Clear the edited content
   };
 
   if (!isHydrated) {
@@ -45,7 +71,7 @@ const MainPage = () => {
         </h1>
 
         {/* Note Input */}
-        <div className="flex gap-2 flex-col sm:flex-row ">
+        <div className="flex gap-2 flex-col sm:flex-row">
           <input
             type="text"
             value={noteInput}
@@ -71,15 +97,56 @@ const MainPage = () => {
               {notes.map((note) => (
                 <li
                   key={note._id}
-                  className="p-2 bg-gray-200 rounded-md flex justify-between group relative "
+                  className="p-2 bg-gray-200 rounded-md flex justify-between items-center group relative"
                 >
-                  {note.content}
-                  <Button
-                    className="hidden group-hover:block bg-red-500 text-white hover:bg-gray-500"
-                    onClick={() => deleteNote(note._id)}
-                  >
-                    <FaTrash />
-                  </Button>
+                  {isEditing === note._id ? (
+                    // If the note is being edited, show an input box
+                    <div className="flex flex-1 gap-2">
+                      <textarea
+                        type="text"
+                        value={editedContent}
+                        onChange={(e) => setEditedContent(e.target.value)}
+                        className="flex-1 p-2 border rounded-md outline-none focus:outline-none focus:ring-none"
+                        style={{
+                          backgroundColor: "#e5e7eb",
+                          border: "none",
+                          outline: "none",
+                        }}
+                      />
+                      <button
+                        onClick={handleSaveEdit}
+                        className=" px-4 py-2 bg-blue-500 text-white rounded-md"
+                      >
+                        Save
+                      </button>
+                      <button
+                        onClick={handleCancelEdit}
+                        className="px-4 py-2 mr-2 bg-gray-500 text-white rounded-md"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  ) : (
+                    // Otherwise, show the note content
+                    <div className="flex items-center gap-2">
+                      <span className="flex-1">{note.content}</span>
+                      <Button
+                        className="hidden group-hover:block bg-green-500 text-white hover:bg-gray-500"
+                        onClick={() => handleEditNote(note)}
+                      >
+                        <FaEdit />
+                      </Button>
+                    </div>
+                  )}
+
+                  <div className="flex ">
+                    <Button
+                      className="hidden group-hover:block bg-red-500 text-white hover:bg-gray-500"
+                      onClick={() => deleteNote(note._id)}
+                    >
+                      <FaTrash />
+                    </Button>
+                  </div>
                 </li>
               ))}
             </ul>
